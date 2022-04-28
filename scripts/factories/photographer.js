@@ -3,7 +3,7 @@ function photographerFactory(data) {
     const { name, portrait, city, country, tagline, price } = data;
 
     //on récupère le chemin de l'image
-    const picture = `assets/photographers/${portrait}`;
+    const picture = `assets/photographers/photographers-id-photos/${portrait}`;
 
     //Crée la carte du photographe en utilisant le DOM
     function getUserCardDOM() {
