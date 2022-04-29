@@ -26,21 +26,23 @@ async function getPhotographers() {
     }) */
 
     //on récupère les données de photographers.json
-    fetch("../data/photographers.json")
-    //on récupère la requête au format json et on vérifie si tout s'est bien passé
+    /* await fetch("../data/photographers.json")
     .then(function(res) {
         if(res.ok) {
            return res.json();
         }
     })
-    //on récupère la requête au format json et retournons la valeur de la requête
     .then(function(data) {
+        console.log("fetch");
         console.log(data.photographers);
         return data.photographers;
     })
     .catch(function(err) {
         console.log(err);
-    })
+    }) */
+
+    const data = await fetch("../data/photographers.json");
+    return await data.json();
 }
 
 async function displayData(photographers) {
