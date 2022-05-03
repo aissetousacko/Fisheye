@@ -18,10 +18,10 @@ function photographerFactory(data) {
         const location = document.createElement('h3');
         location.textContent = city + ", " + country;
         //tagline
-        const taglineElement = document.createElement('span');
+        const taglineElement = document.createElement('h4');
         taglineElement.textContent = tagline;
         //price
-        const priceElement = document.createElement('span');
+        const priceElement = document.createElement('p');
         priceElement.textContent = price + "€/jour";
 
         //ajout des éléments dans l'article
