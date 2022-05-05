@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Fisheye - photographe </title>
 </head>
 
@@ -18,9 +19,25 @@
   <!-- Main content -->
   <main id="main">
     <!-- Photograph header -->
-    <div class="photograph-header">
+    <section class="photograph-header">
       <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-    </div>
+    </section>
+
+    <!-- Photograph medias -->
+    <section class="photograph-medias">
+      <!-- Filter -->
+      <div class="medias-filter">
+        <label for="filter">Trier par : </label>
+        <div name="filter" id="filter" role="listbox">
+          <i class="fa-solid fa-angle-down icon-down"></i>
+          <button role="option" id="popularity" class="filter-option">Popularité</button>
+          <button role="option" id="date" class="filter-option">Date</button>
+          <button role="option" id="title" class="filter-option">Titre</button>
+        </div>
+      </div>
+      
+    </section>
+
   </main>
 
   <!-- Contact modal -->

@@ -3,7 +3,7 @@
 .photograph-header {
     background-color: #FAFAFA;
     height: 300px;
-    margin: 0 100px;
+    margin: 25px 100px;
     padding: 0 50px;
     display: flex;
     justify-content: space-between;
@@ -38,6 +38,66 @@
     border-radius: 50%;
 }
 
+
+
+
+/******Photograph medias*******/
+
+/*Filtre*/
+.photograph-medias {
+    margin: 0 100px;
+}
+
+.medias-filter {
+    display: flex;
+}
+
+.medias-filter label{
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 20px;
+}
+#filter {
+    display: flex;
+    flex-direction: column;
+    width: 155px;
+    height: auto;
+    padding: 10px;
+    color: #FAFAFA;
+    background-color: #901C1C;
+    border-radius: 5px;
+}
+
+.filter-option {
+    padding: 10px;
+    color: #FAFAFA;
+    background-color: #901C1C;
+    border: none;
+    font-size: 20px;
+    text-align: start;
+}
+
+#date {
+    border-top: 1px solid #FAFAFA;
+    border-bottom: 1px solid #FAFAFA;
+}
+
+#date, #title {
+    display: none;
+}
+
+.icon-down {
+	position: absolute;
+	top: 49%; 
+	left: 25%;  
+    font-size: 23px;
+	color: #FAFAFA;
+}
+
+.icon-up {
+    transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+}
 
 
 /*****Modal*****/

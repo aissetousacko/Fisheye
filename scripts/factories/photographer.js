@@ -92,3 +92,21 @@ async function init() {
 };
 
 init();
+
+const icon = document.querySelector(".icon-down");
+const filterPopularity = document.querySelector("#popularity");
+const filterDate = document.querySelector("#date");
+const filterTitle = document.querySelector("#title");
+
+icon.addEventListener("click", function() {
+  if(filterDate.style.display === "none") {
+    filterDate.style.display = "block";
+    filterTitle.style.display = "block";
+    icon.classList.add("icon-up");
+  } else {
+    filterDate.style.display = "none";
+    filterTitle.style.display = "none";
+    icon.classList.remove("icon-up");
+  }
+
+})
