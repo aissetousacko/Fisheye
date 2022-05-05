@@ -1,11 +1,48 @@
-#contact_modal {
-    display: none;
-}
+/******Photograph header********/
 
 .photograph-header {
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.photograph-header article h1{
+    color: #D3573C;
+    font-weight: 100;
+    font-size: 55px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.photograph-header article h2{
+    color: #901C1C;
+    font-weight: 100;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.photograph-header article p{
+    font-weight: 100;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+.photograph-header img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+
+/*****Modal*****/
+#contact_modal {
+    display: none;
 }
 
 .contact_button {
