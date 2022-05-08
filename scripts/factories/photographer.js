@@ -58,9 +58,9 @@ async function getPhotographer() {
 const photographerId = 243;
 
 async function init() {
-  console.log("init");
+  //console.log("init header");
 	const photographer = await getPhotographer();
-	console.log(photographer);
+	//console.log(photographer);
 
 	const photographHeader = document.querySelector(".photograph-header");
 	const contactButton = document.querySelector(".contact_button");
@@ -109,4 +109,4 @@ icon.addEventListener("click", function() {
     icon.classList.remove("icon-up");
   }
 
-})
+});
