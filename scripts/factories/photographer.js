@@ -8,29 +8,30 @@ function photographerFactory(data) {
 
     //Crée la carte du photographe en utilisant le DOM
     function getUserCardDOM() {
-      const article = document.createElement( 'article' );
+      const photographerArticle = document.createElement("article");
       //image
-      const img = document.createElement( 'img' );
-      img.setAttribute("src", picture)
+      const img = document.createElement("img");
+      img.setAttribute("src", picture);
+      img.setAttribute("alt", "Photo de " + name);
       //name
-      const h2 = document.createElement( 'h2' );
+      const h2 = document.createElement("h2");
       h2.textContent = name;
       //city et country
-      const location = document.createElement('h3');
+      const location = document.createElement("h3");
       location.textContent = city + ", " + country;
       //tagline
-      const taglineElement = document.createElement('h4');
+      const taglineElement = document.createElement("h4");
       taglineElement.textContent = tagline;
       //price
-      const priceElement = document.createElement('p');
+      const priceElement = document.createElement("p");
       priceElement.textContent = price + "€/jour";
       //ajout des éléments dans l'article
-      article.appendChild(img);
-      article.appendChild(h2);
-      article.appendChild(location);
-      article.appendChild(taglineElement);
-      article.appendChild(priceElement);
-      return (article);
+      photographerArticle.appendChild(img);
+      photographerArticle.appendChild(h2);
+      photographerArticle.appendChild(location);
+      photographerArticle.appendChild(taglineElement);
+      photographerArticle.appendChild(priceElement);
+      return (photographerArticle);
     }
     return { name, picture, getUserCardDOM }
 }
@@ -55,7 +56,6 @@ async function getPhotographer() {
 }
 
 //Mimi Keel
-const photographerId = 243;
 
 async function init() {
   //console.log("init header");
@@ -89,27 +89,35 @@ async function init() {
   img.setAttribute("alt", photographer.name);
   photographHeader.appendChild(img);
 
+  filterIcon();
+  stickyTag();
+
 };
 
-init();
 
-const icon = document.querySelector(".icon-down");
-const filterPopularity = document.querySelector("#popularity");
-const filterDate = document.querySelector("#date");
-const filterTitle = document.querySelector("#title");
 
-icon.addEventListener("click", function() {
-  if(filterDate.style.display === "none") {
-    filterDate.style.display = "block";
-    filterTitle.style.display = "block";
-    icon.classList.add("icon-up");
-  } else {
-    filterDate.style.display = "none";
-    filterTitle.style.display = "none";
-    icon.classList.remove("icon-up");
-  }
+async function filterIcon() {
+  const icon = document.querySelector(".icon-down");
+  const filterPopularity = document.querySelector("#popularity");
+  const filterDate = document.querySelector("#date");
+  const filterTitle = document.querySelector("#title");
 
-});
+  icon.addEventListener("click", function() {
+    if(filterDate.style.display === "none") {
+      filterDate.style.display = "block";
+      filterTitle.style.display = "block";
+      icon.classList.add("icon-up");
+    } else {
+      filterDate.style.display = "none";
+      filterTitle.style.display = "none";
+      icon.classList.remove("icon-up");
+    }
+
+  });
+
+}
+
+
 
 /* async function allLikes(photographerId) {
   let likes = 0;
@@ -155,4 +163,7 @@ async function stickyTag() {
   return tag;
 }
 
-stickyTag();
+const photographerId = 243;
+
+
+init();
