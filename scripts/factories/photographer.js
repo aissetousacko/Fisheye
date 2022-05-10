@@ -110,3 +110,49 @@ icon.addEventListener("click", function() {
   }
 
 });
+
+/* async function allLikes(photographerId) {
+  let likes = 0;
+  const data = await fetch ("data/photographers.json")
+  let medias = await data.json();
+  medias = medias.media.filter((media) => {
+      if(media.photographerId == photographerId) {
+          return medias;
+      }
+  })
+  
+} */
+
+
+async function stickyTag() {
+  /* const data = await fetch ("data/photographers.json")
+  let medias = await data.json();
+  medias = medias.media.filter((media) => {
+      if(media.photographerId == photographerId) {
+          return medias;
+      }
+  }); */
+
+  //Tag
+  const tag = document.querySelector(".tag");
+  //likes
+  const likes = document.createElement("div");
+  likes.className = "tag-likes";
+  const likesText = document.createElement("p");
+  likesText.textContent = 22;
+  const likesIcon = document.createElement("i");
+  likesIcon.className = "fa-solid fa-heart";
+  likes.appendChild(likesText);
+  likes.appendChild(likesIcon);
+
+  //price
+  const price = document.createElement("span");
+  price.textContent = "400€/jour";
+
+  tag.appendChild(likes);
+  tag.appendChild(price);
+
+  return tag;
+}
+
+stickyTag();
