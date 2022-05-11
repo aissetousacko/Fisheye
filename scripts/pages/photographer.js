@@ -25,11 +25,11 @@ async function getPhotographer() {
 //Mimi Keel
 
 async function init() {
-  console.log("init header");
+  //console.log("init header");
 	const photographer = await getPhotographer();
 	console.log(photographer);
 
-	const photographHeader = document.querySelector(".photograph-header");
+	/* const photographHeader = document.querySelector(".photograph-header");
 	const contactButton = document.querySelector(".contact_button");
 	const photographDetail = document.createElement("article");
 	photographHeader.insertBefore(photographDetail, contactButton);
@@ -54,7 +54,11 @@ async function init() {
   const img = document.createElement("img");
   img.setAttribute("src", picture);
   img.setAttribute("alt", photographer.name);
-  photographHeader.appendChild(img);
+  photographHeader.appendChild(img); */
+
+  //Photographer header
+  const photographerData = photographerFactory(photographer);
+  photographerData.getPhotographerHeader();
 
   filterIcon();
   stickyTag();
@@ -63,7 +67,7 @@ async function init() {
 
 
 
-async function filterIcon() {
+function filterIcon() {
   const icon = document.querySelector(".icon-down");
   const filterPopularity = document.querySelector("#popularity");
   const filterDate = document.querySelector("#date");
@@ -99,7 +103,7 @@ async function filterIcon() {
 } */
 
 
-async function stickyTag() {
+function stickyTag() {
   /* const data = await fetch ("data/photographers.json")
   let medias = await data.json();
   medias = medias.media.filter((media) => {
