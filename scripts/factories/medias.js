@@ -7,7 +7,7 @@ function mediasFactory(data) {
         mediaArticle.classList.add("media-article");
 
         if("video" in data) {
-            const videoFile = `assets/photographers/MimiKeel/${video}`;
+            const videoFile = `assets/photographers/${photographerId}/${video}`;
             // vidéo
             const videoElement = document.createElement('video');
             videoElement.classList.add("media-video");
@@ -19,7 +19,7 @@ function mediasFactory(data) {
             mediaArticle.appendChild(videoElement);
             videoElement.appendChild(sourceVideo);
         } else {
-            const picture = `assets/photographers/MimiKeel/${image}`;
+            const picture = `assets/photographers/${photographerId}/${image}`;
             //image
             const img = document.createElement('img');
             img.setAttribute("src", picture);
