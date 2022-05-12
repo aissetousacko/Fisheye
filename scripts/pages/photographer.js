@@ -134,6 +134,35 @@ function stickyTag(photographer) {
   return tag;
 }
 
+//onc rée une event qui target les coeurs et augmente leur nombre
+function incrementLikes() {
+  const likesIcon = document.querySelectorAll(".icon-heart");
+  const allLikes = document.querySelector(".tag-likes p");
+  //console.log(likesIcon)
+  //console.log(allLikes)
+
+  //on parcourt tous les icones likes
+  for(let i = 0; i < likesIcon.length; i++) {
+    //sur chaque icone on met un event click
+    likesIcon[i].onclick = () => {
+      //on récupère l'élément qui contient le texte du nombre des likes
+      let likeText = likesIcon[i].previousElementSibling;
+      //console.log(likeText)
+      //si l'élément contient la classe liked on décrémente sinon on incrémente
+      if(likeText.classList.contains("liked")) {
+        likeText.textContent--;
+        likeText.classList.remove("liked");
+        allLikes.textContent--;
+      } else {
+        likeText.textContent++;
+        likeText.classList.add("liked");
+        allLikes.textContent++;
+      }
+    }
+  }
+  
+  
+}
 
 async function init() {
   //console.log("init header");
@@ -153,7 +182,8 @@ async function init() {
   filterIcon();
   stickyTag(photographer);
   allLikes(medias)
-
+  incrementLikes()
+  
 };  
 
 init();

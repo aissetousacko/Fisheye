@@ -145,9 +145,15 @@
     margin-right: 10px;
 }
 
+.liked {
+    color: #901C1C;
+    font-weight: 600;
+}
+
 .icon-heart {
     color: #901C1C;
     font-size: 22px;
+    cursor: pointer;
 }
 
 
