@@ -5,6 +5,7 @@
 const photographerId = new URLSearchParams(window.location.search).get("id");
 
 /*****Affichage des informations du photographe******/
+//on récupère le photographe
 async function getPhotographer() {
 	const data = await fetch("../data/photographers.json");
   const photographers = await data.json();
@@ -22,50 +23,57 @@ async function getPhotographer() {
 	return photographer[0];
 }
 
-//Mimi Keel
+/**Pour récupérer les médias**/
+async function getMedias() {
+  console.log("init medias")
+  const data = await fetch ("data/photographers.json")
+  let medias = await data.json();
+  medias = medias.media.filter((media) => {
+    if(media.photographerId == photographerId) {
+        return medias;
+    }
+  })
+  /* console.log("photographer ID")
+  console.log(photographerId)
+  console.log("tous les médias")
+  console.log(medias) */
+  
+  return medias;
+  //on sélectionne l'endroit où les médias doivent s'afficher
+  /* const photographerMediasSection = document.querySelector(".medias-display");
 
-async function init() {
-  //console.log("init header");
-	const photographer = await getPhotographer();
-	console.log(photographer);
+  //on parcourt tous les médias
+  medias.forEach(media => {
+      // Si le photographerId de chaque media = à l'Id du photographe
+      if (media.photographerId == photographerId) {
+          // Alors on affiche le media sur la page dans la section .photograph-medias
+          // mise au bon format avec le mediaFactory
+          const photographerMedia = new mediasFactory(media);     
+          // Mise en forme de chaque média dans le DOM
+          const mediaCardDOM = photographerMedia.getMediaCardDOM();
+          photographerMediasSection.appendChild(mediaCardDOM);       
+      } 
+  }); */
+  
+}
 
-	/* const photographHeader = document.querySelector(".photograph-header");
-	const contactButton = document.querySelector(".contact_button");
-	const photographDetail = document.createElement("article");
-	photographHeader.insertBefore(photographDetail, contactButton);
-
-	//name
-	const h1 = document.createElement( 'h1' );
-	h1.textContent = photographer.name;
-	//city et country
-	const location = document.createElement('h2');
-	location.textContent = photographer.city + ", " + photographer.country;
-	//tagline
-	const taglineElement = document.createElement('p');
-	taglineElement.textContent = photographer.tagline;
-
-	//ajout des éléments dans l'article
-	photographDetail.appendChild(h1);
-	photographDetail.appendChild(location);
-	photographDetail.appendChild(taglineElement);
-
-  //photo de profil du photographe
-	const picture = `assets/photographers/photographers-id-photos/${photographer.portrait}`;
-  const img = document.createElement("img");
-  img.setAttribute("src", picture);
-  img.setAttribute("alt", photographer.name);
-  photographHeader.appendChild(img); */
-
-  //Photographer header
-  const photographerData = photographerFactory(photographer);
-  photographerData.getPhotographerHeader();
-
-  filterIcon();
-  stickyTag();
-
-};
-
-
+function displayMedia(medias) {
+  //on sélectionne l'endroit où les médias doivent s'afficher
+  const photographerMediasSection = document.querySelector(".medias-display");
+  //console.log(medias);
+  //on parcourt tous les médias
+  medias.forEach(media => {
+      // Si le photographerId de chaque media = à l'Id du photographe
+      
+          // Alors on affiche le media sur la page dans la section .photograph-medias
+          // mise au bon format avec le mediaFactory
+          const photographerMedia = new mediasFactory(media);     
+          // Mise en forme de chaque média dans le DOM
+          const mediaCardDOM = photographerMedia.getMediaCardDOM();
+          photographerMediasSection.appendChild(mediaCardDOM);       
+      } 
+  );
+}
 
 function filterIcon() {
   const icon = document.querySelector(".icon-down");
@@ -88,29 +96,22 @@ function filterIcon() {
 
 }
 
+function allLikes(media) {
+  let sum = 0;
+  media.forEach(like => {
+    sum += like.likes
+  });
+  //console.log(sum);
+
+  const allLikes = document.querySelector(".tag-likes p");
+  //console.log(allLikes);
+  allLikes.textContent = sum;
+  return sum;
+}
 
 
-/* async function allLikes(photographerId) {
-  let likes = 0;
-  const data = await fetch ("data/photographers.json")
-  let medias = await data.json();
-  medias = medias.media.filter((media) => {
-      if(media.photographerId == photographerId) {
-          return medias;
-      }
-  })
+function stickyTag(photographer) {
   
-} */
-
-
-function stickyTag() {
-  /* const data = await fetch ("data/photographers.json")
-  let medias = await data.json();
-  medias = medias.media.filter((media) => {
-      if(media.photographerId == photographerId) {
-          return medias;
-      }
-  }); */
 
   //Tag
   const tag = document.querySelector(".tag");
@@ -118,7 +119,6 @@ function stickyTag() {
   const likes = document.createElement("div");
   likes.className = "tag-likes";
   const likesText = document.createElement("p");
-  likesText.textContent = 22;
   const likesIcon = document.createElement("i");
   likesIcon.className = "fa-solid fa-heart";
   likes.appendChild(likesText);
@@ -126,7 +126,7 @@ function stickyTag() {
 
   //price
   const price = document.createElement("span");
-  price.textContent = "400€/jour";
+  price.textContent = photographer.price + "€/jour";
 
   tag.appendChild(likes);
   tag.appendChild(price);
@@ -134,5 +134,26 @@ function stickyTag() {
   return tag;
 }
 
+
+async function init() {
+  //console.log("init header");
+	const photographer = await getPhotographer();
+	//console.log(photographer);
+
+
+  //Photographer header
+  const photographerData = photographerFactory(photographer);
+  photographerData.getPhotographerHeader();
+
+  //on récupère tous les médias
+  /* getMedias(); */
+  const medias = await getMedias();
+  displayMedia(medias);
+  
+  filterIcon();
+  stickyTag(photographer);
+  allLikes(medias)
+
+};  
 
 init();
