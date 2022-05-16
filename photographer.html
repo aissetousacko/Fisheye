@@ -31,10 +31,12 @@
       <div class="medias-filter">
         <label for="filter">Trier par : </label>
         <div name="filter" id="filter" role="listbox" aria-label="Filtre">
-          <i class="fa-solid fa-angle-down icon-down"></i>
-          <button role="option" id="popularity" class="filter-option">Popularité</button>
-          <button role="option" id="date" class="filter-option">Date</button>
-          <button role="option" id="title" class="filter-option">Titre</button>
+          <i class="fa-solid fa-angle-down icon-filter"></i>
+          <button role="option" tabindex="0" id="popularity" class="filter-option selected">Popularité</button>
+          <div class="filter-select-options" aria-expanded="false">
+            <button role="option" tabindex="0" id="date" class="filter-option">Date</button>
+            <button role="option" tabindex="0" id="title" class="filter-option">Titre</button>
+          </div> 
         </div>
       </div>
 

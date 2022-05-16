@@ -3,7 +3,7 @@
 /* const photographerId = 243; */
 // Get "Id" from URL of photographer's page
 const photographerId = new URLSearchParams(window.location.search).get("id");
-
+let isOpen = false;
 /*****Affichage des informations du photographe******/
 //on récupère le photographe
 async function getPhotographer() {
@@ -61,38 +61,96 @@ function displayMedia(medias) {
   //on sélectionne l'endroit où les médias doivent s'afficher
   const photographerMediasSection = document.querySelector(".medias-display");
   //console.log(medias);
+  photographerMediasSection.innerHTML = "";
+
   //on parcourt tous les médias
   medias.forEach(media => {
-      // Si le photographerId de chaque media = à l'Id du photographe
-      
-          // Alors on affiche le media sur la page dans la section .photograph-medias
-          // mise au bon format avec le mediaFactory
-          const photographerMedia = new mediasFactory(media);     
-          // Mise en forme de chaque média dans le DOM
-          const mediaCardDOM = photographerMedia.getMediaCardDOM();
-          photographerMediasSection.appendChild(mediaCardDOM);       
-      } 
+    // Si le photographerId de chaque media = à l'Id du photographe
+     // Alors on affiche le media sur la page dans la section .photograph-medias
+     // mise au bon format avec le mediaFactory
+     const photographerMedia = new mediasFactory(media);     
+     // Mise en forme de chaque média dans le DOM
+     const mediaCardDOM = photographerMedia.getMediaCardDOM();
+     photographerMediasSection.appendChild(mediaCardDOM);       
+    } 
   );
 }
 
-function filterIcon() {
-  const icon = document.querySelector(".icon-down");
-  const filterPopularity = document.querySelector("#popularity");
-  const filterDate = document.querySelector("#date");
-  const filterTitle = document.querySelector("#title");
-
-  icon.addEventListener("click", function() {
-    if(filterDate.style.display === "none") {
-      filterDate.style.display = "block";
-      filterTitle.style.display = "block";
-      icon.classList.add("icon-up");
+function filterDisplay() {
+  const icon = document.querySelector(".icon-filter");
+  const filterOptionsBox = document.querySelector(".filter-select-options");
+  const selected = document.querySelector(".selected");
+  selected.onclick = () => {
+    if(isOpen) {
+      closeBox()
     } else {
-      filterDate.style.display = "none";
-      filterTitle.style.display = "none";
-      icon.classList.remove("icon-up");
+      filterOptionsBox.style.display = "flex";
+      filterOptionsBox.setAttribute("aria-expanded", "true");
+      icon.classList.add("icon-rotate");
+      filterOptionsBox.classList.remove("open")
     }
+  }
 
+}
+
+function closeBox() {
+  const icon = document.querySelector(".icon-filter");
+  icon.classList.remove("icon-rotate");
+  const filterOptionsBox = document.querySelector(".filter-select-options");
+  
+  filterOptionsBox.style.display = "none";
+  filterOptionsBox.setAttribute("aria-expanded", "false");
+  //console.log("close")
+  return isOpen = false
+  
+}
+
+function sortMedias(media) {
+  const filterOptions = document.querySelectorAll(".filter-option");
+  const selected = document.querySelector(".selected");
+
+  console.log("popularité - default")
+  media = media.sort((media1, media2) => {
+    return media2.likes - media1.likes;
   });
+  displayMedia(media)
+  incrementLikes()
+
+  filterOptions.forEach(filter => {
+    filter.onclick = (e) => {
+
+      switch (e.target.textContent) {
+        case "Popularité":
+          //console.log("popularité");
+          media = media.sort((media1, media2) => {
+            return media2.likes - media1.likes;
+          });
+          break;
+
+        case "Date":
+          //console.log("date");
+          media = media.sort((media1, media2) => {
+            return new Date(media2.date) - new Date(media1.date)
+          });
+          break;
+    
+        case "Titre":
+          //console.log("titre");
+          media = media.sort((media1, media2) => {
+            return media1.title.localeCompare(media2.title);
+          });
+          break;
+      }
+      const buttonSelected = filter.textContent
+      filter.textContent = selected.textContent
+      selected.textContent = buttonSelected;
+      closeBox()
+      
+      displayMedia(media)
+      incrementLikes()
+    }
+    
+  })
 
 }
 
@@ -102,7 +160,6 @@ function allLikes(media) {
     sum += like.likes
   });
   //console.log(sum);
-
   const allLikes = document.querySelector(".tag-likes p");
   //console.log(allLikes);
   allLikes.textContent = sum;
@@ -111,8 +168,6 @@ function allLikes(media) {
 
 
 function stickyTag(photographer) {
-  
-
   //Tag
   const tag = document.querySelector(".tag");
   //likes
@@ -177,9 +232,11 @@ async function init() {
   //on récupère tous les médias
   /* getMedias(); */
   const medias = await getMedias();
-  displayMedia(medias);
+  //displayMedia(medias);
+
+  sortMedias(medias);
   
-  filterIcon();
+  filterDisplay();
   stickyTag(photographer);
   allLikes(medias)
   incrementLikes()
