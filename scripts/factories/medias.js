@@ -1,5 +1,5 @@
 function mediasFactory(data) {
-    const { photographerId, title, image, video, likes, date, price, index } = data;
+    const { photographerId, title, image, video, likes } = data;
 
     function getMediaCardDOM() {
 
@@ -56,25 +56,3 @@ function mediasFactory(data) {
 
     return { getMediaCardDOM }
 }
-
-
-
-/* function displayMedia(media) {
-    const photographerMediasSection = document.querySelector(".medias-display");
-  
-    medias.forEach(media => {
-        // Si le photographerId de chaque media = à l'Id du photographe
-        if (media.photographerId == photographerId) {
-            // Alors on affiche le media sur la page dans la section .photograph-medias
-            // Récupération de chaque media en le faisant passer dans la MediasFactory
-            const photographerMedia = new mediasFactory(media);  
-            console.log(photographerMedia);    
-            // Mise en forme de chaque média dans le DOM
-            const mediaCardDOM = photographerMedia.getMediaCardDOM();
-            photographerMediasSection.appendChild(mediaCardDOM);       
-        } 
-    });
-} */
-
-
-/* displayMedia(media); */

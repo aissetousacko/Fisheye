@@ -3,7 +3,7 @@
 /* const photographerId = 243; */
 // Get "Id" from URL of photographer's page
 const photographerId = new URLSearchParams(window.location.search).get("id");
-let isOpen = false;
+
 /*****Affichage des informations du photographe******/
 //on récupère le photographe
 async function getPhotographer() {
@@ -39,23 +39,9 @@ async function getMedias() {
   console.log(medias) */
   
   return medias;
-  //on sélectionne l'endroit où les médias doivent s'afficher
-  /* const photographerMediasSection = document.querySelector(".medias-display");
-
-  //on parcourt tous les médias
-  medias.forEach(media => {
-      // Si le photographerId de chaque media = à l'Id du photographe
-      if (media.photographerId == photographerId) {
-          // Alors on affiche le media sur la page dans la section .photograph-medias
-          // mise au bon format avec le mediaFactory
-          const photographerMedia = new mediasFactory(media);     
-          // Mise en forme de chaque média dans le DOM
-          const mediaCardDOM = photographerMedia.getMediaCardDOM();
-          photographerMediasSection.appendChild(mediaCardDOM);       
-      } 
-  }); */
   
 }
+
 
 function displayMedia(medias) {
   //on sélectionne l'endroit où les médias doivent s'afficher
@@ -66,28 +52,35 @@ function displayMedia(medias) {
   //on parcourt tous les médias
   medias.forEach(media => {
     // Si le photographerId de chaque media = à l'Id du photographe
-     // Alors on affiche le media sur la page dans la section .photograph-medias
-     // mise au bon format avec le mediaFactory
-     const photographerMedia = new mediasFactory(media);     
-     // Mise en forme de chaque média dans le DOM
-     const mediaCardDOM = photographerMedia.getMediaCardDOM();
-     photographerMediasSection.appendChild(mediaCardDOM);       
-    } 
-  );
+    // Alors on affiche le media sur la page dans la section .photograph-medias
+    // mise au bon format avec le mediaFactory
+    const photographerMedia = new mediasFactory(media);     
+    // Mise en forme de chaque média dans le DOM
+    const mediaCardDOM = photographerMedia.getMediaCardDOM();
+    photographerMediasSection.appendChild(mediaCardDOM);
+    //au click sur l'image du média on ouvre la lightbox
+    mediaCardDOM.children[0].onclick = () => {
+      lightboxDOM(media)
+    }
+    //console.log(mediaCardDOM.children[0])   
+  });
 }
 
+let isOpen = false;
 function filterDisplay() {
   const icon = document.querySelector(".icon-filter");
   const filterOptionsBox = document.querySelector(".filter-select-options");
   const selected = document.querySelector(".selected");
+  
   selected.onclick = () => {
     if(isOpen) {
-      closeBox()
+      closeBox();
     } else {
       filterOptionsBox.style.display = "flex";
       filterOptionsBox.setAttribute("aria-expanded", "true");
       icon.classList.add("icon-rotate");
-      filterOptionsBox.classList.remove("open")
+      filterOptionsBox.classList.add("open")
+      isOpen = true;
     }
   }
 
@@ -100,7 +93,7 @@ function closeBox() {
   
   filterOptionsBox.style.display = "none";
   filterOptionsBox.setAttribute("aria-expanded", "false");
-  //console.log("close")
+  console.log("close")
   return isOpen = false
   
 }
