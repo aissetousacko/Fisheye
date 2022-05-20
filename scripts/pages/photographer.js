@@ -3,7 +3,7 @@
 /* const photographerId = 243; */
 // Get "Id" from URL of photographer's page
 const photographerId = new URLSearchParams(window.location.search).get("id");
-
+let mediasList = [];
 /*****Affichage des informations du photographe******/
 //on récupère le photographe
 async function getPhotographer() {
@@ -30,14 +30,15 @@ async function getMedias() {
   let medias = await data.json();
   medias = medias.media.filter((media) => {
     if(media.photographerId == photographerId) {
-        return medias;
+      return medias;
     }
+    
   })
   /* console.log("photographer ID")
   console.log(photographerId)
   console.log("tous les médias")
   console.log(medias) */
-  
+  console.log(mediasList)
   return medias;
   
 }
@@ -49,6 +50,7 @@ function displayMedia(medias) {
   //console.log(medias);
   photographerMediasSection.innerHTML = "";
 
+  
   //on parcourt tous les médias
   medias.forEach(media => {
     // Si le photographerId de chaque media = à l'Id du photographe
@@ -58,12 +60,10 @@ function displayMedia(medias) {
     // Mise en forme de chaque média dans le DOM
     const mediaCardDOM = photographerMedia.getMediaCardDOM();
     photographerMediasSection.appendChild(mediaCardDOM);
-    //au click sur l'image du média on ouvre la lightbox
-    mediaCardDOM.children[0].onclick = () => {
-      lightboxDOM(media)
-    }
-    //console.log(mediaCardDOM.children[0])   
+    //On ajoute le média dans le tableau qui contien tous les médias du photographe
+    mediasList.push(media)
   });
+  
 }
 
 let isOpen = false;
@@ -98,15 +98,15 @@ function closeBox() {
   
 }
 
-function sortMedias(media) {
+function sortMedias(medias) {
   const filterOptions = document.querySelectorAll(".filter-option");
   const selected = document.querySelector(".selected");
 
   console.log("popularité - default")
-  media = media.sort((media1, media2) => {
+  medias = medias.sort((media1, media2) => {
     return media2.likes - media1.likes;
   });
-  displayMedia(media)
+  displayMedia(medias)
   incrementLikes()
 
   filterOptions.forEach(filter => {
@@ -115,21 +115,21 @@ function sortMedias(media) {
       switch (e.target.textContent) {
         case "Popularité":
           //console.log("popularité");
-          media = media.sort((media1, media2) => {
+          medias = medias.sort((media1, media2) => {
             return media2.likes - media1.likes;
           });
           break;
 
         case "Date":
           //console.log("date");
-          media = media.sort((media1, media2) => {
+          medias = medias.sort((media1, media2) => {
             return new Date(media2.date) - new Date(media1.date)
           });
           break;
     
         case "Titre":
           //console.log("titre");
-          media = media.sort((media1, media2) => {
+          medias = medias.sort((media1, media2) => {
             return media1.title.localeCompare(media2.title);
           });
           break;
@@ -139,8 +139,9 @@ function sortMedias(media) {
       selected.textContent = buttonSelected;
       closeBox()
       
-      displayMedia(media)
+      displayMedia(medias)
       incrementLikes()
+      diplayLightbox(medias)
     }
     
   })
@@ -233,7 +234,7 @@ async function init() {
   stickyTag(photographer);
   allLikes(medias)
   incrementLikes()
-  
+  diplayLightbox(medias)
 };  
 
 init();

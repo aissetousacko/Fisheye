@@ -1,9 +1,10 @@
 function mediasFactory(data) {
-    const { photographerId, title, image, video, likes } = data;
+    const { photographerId, id, title, image, video, likes } = data;
 
     function getMediaCardDOM() {
 
         const mediaArticle = document.createElement('article');
+        mediaArticle.setAttribute("id", id);
         mediaArticle.classList.add("media-article");
 
         if("video" in data) {
@@ -12,6 +13,7 @@ function mediasFactory(data) {
             const videoElement = document.createElement('video');
             videoElement.classList.add("media-video");
             videoElement.setAttribute("controls", "");
+            videoElement.dataset.id = id
             const sourceVideo = document.createElement('source');
             sourceVideo.setAttribute("src",videoFile);
             sourceVideo.setAttribute("type","video/mp4");
@@ -24,6 +26,7 @@ function mediasFactory(data) {
             const img = document.createElement('img');
             img.setAttribute("src", picture);
             img.setAttribute("alt", title);
+            img.dataset.id = id
             img.classList.add("media-img");
             mediaArticle.appendChild(img);
         }

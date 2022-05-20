@@ -1,15 +1,39 @@
-//Ici se trouve le code pour la LightBox
-//ajouter  médias dans les paramètres plus tard
-function lightboxDOM(media) {
-    const lightboxContainer = document.createElement("section");
+let index = 0;
+
+function diplayLightbox(mediasList) {
+
+    //on sélectionne chaque image et vidéo pour qu'au click la lightbox s'affiche
+    const mediasDom = document.querySelectorAll(".media-img, .media-video");
+    //console.log(mediasDom)
+    mediasDom.forEach(media => {
+        //au click sur l'image du média on ouvre la lightbox
+        media.onclick = (e) => {
+            console.log("click")
+            let currentMediaTarget = e.target;
+            console.log(e.target)
+            //on va chercher l'élément cliqué dans le tableau
+            const currentMedia = mediasList.find((media) => media.id == currentMediaTarget.dataset.id)
+            console.log("current media")
+            console.log(currentMedia)
+            index = parseInt(e.target.getAttribute('data-id'));
+            //console.log(index)
+            display(mediasList, index, currentMedia)
+        }
+    });
+}
+
+function display(mediasList, index, currentMedia) {
+    //lightbox
+    const lightboxContainer = document.createElement("div");
     lightboxContainer.className = "lightbox-container";
     document.body.appendChild(lightboxContainer);
 
+    //lightbox modal
     const lightboxModal = document.createElement("div");
     lightboxModal.className = "lightbox-modal";
-    //lightboxModal.textContent = "lightbox modal";
     lightboxContainer.appendChild(lightboxModal);
 
+    //flèche précédent
     const lightboxPrevious = document.createElement("button");
     lightboxPrevious.className = "lightbox-previous";
     lightboxModal.appendChild(lightboxPrevious);
@@ -17,24 +41,29 @@ function lightboxDOM(media) {
     previousIcon.className = "fa-solid fa-chevron-left";
     lightboxPrevious.appendChild(previousIcon);
 
+    //lightbox media (image+titre)
     const lightboxMedia = document.createElement("div");
     lightboxMedia.className = "lightbox-media";
     lightboxModal.appendChild(lightboxMedia);
-    if(media.image) {
+    if(currentMedia.image) {
         //image
         const lightboxImage = document.createElement("img");
         lightboxImage.className = "lightbox-image";
-        lightboxImage.setAttribute("src", `assets/photographers/${media.photographerId}/${media.image}`);
-        lightboxImage.setAttribute("alt", media.title);
+        lightboxImage.setAttribute("src", `assets/photographers/${currentMedia.photographerId}/${currentMedia.image}`);
+        lightboxImage.setAttribute("alt", currentMedia.title);
+        lightboxImage.dataset.id = index;
         lightboxMedia.appendChild(lightboxImage);
-    } else {
+    } 
+    
+    else if(currentMedia.video) {
         //video
         const lightboxVideo = document.createElement("video");
         const lightboxSourceVideo = document.createElement("source")
         lightboxVideo.className = "lightbox-video";
-        lightboxVideo.setAttribute("alt", media.title);
+        lightboxVideo.setAttribute("alt", currentMedia.title);
         lightboxVideo.setAttribute("controls", "");
-        lightboxSourceVideo.setAttribute("src", `assets/photographers/${media.photographerId}/${media.video}`);
+        lightboxVideo.dataset.id = index;
+        lightboxSourceVideo.setAttribute("src", `assets/photographers/${currentMedia.photographerId}/${currentMedia.video}`);
         lightboxSourceVideo.setAttribute("type", "video/mp4");
         lightboxMedia.appendChild(lightboxVideo);
         lightboxVideo.appendChild(lightboxSourceVideo);
@@ -42,7 +71,7 @@ function lightboxDOM(media) {
     //title
     const lightboxTitle = document.createElement("h3");
     lightboxTitle.className = "lightbox-title";
-    lightboxTitle.textContent = media.title;
+    lightboxTitle.textContent = currentMedia.title;
     lightboxMedia.appendChild(lightboxTitle);
 
     //close
@@ -61,13 +90,72 @@ function lightboxDOM(media) {
     lightboxNext.appendChild(nextIcon);
 
     lightboxContainer.setAttribute("aria-hidden", "false");
-    lightboxContainer.style.display = "block"
+    lightboxContainer.style.display = "block";
 
-    //fermeture lightbox
+    eventHandler(mediasList, currentMedia);
+}
+
+function eventHandler(mediasList, currentMedia) {
+    const lightboxClose = document.querySelector(".lightbox-close");
+    const lightboxPrevious = document.querySelector(".lightbox-previous");
+    const lightboxNext = document.querySelector(".lightbox-next");
+
     lightboxClose.onclick = () => {
-        lightboxContainer.style.display = "none";
-        lightboxContainer.setAttribute("aria-hidden", "true");
-        lightboxContainer.remove();
+        closeLightbox();
+    }
+
+    lightboxPrevious.onclick = () => {
+        displayPrevious(mediasList, currentMedia);
     }
     
+    lightboxNext.onclick = () => {
+        displayNext(mediasList, currentMedia);
+    }
+
+    document.addEventListener("keydown", (e) => {
+        if(e.key === "ArrowLeft") {
+            displayPrevious(mediasList, currentMedia);
+        } else if(e.key === "ArrowRight") {
+            displayNext(mediasList, currentMedia);
+        } else if(e.key === "Escape") {
+            closeLightbox();
+        }
+    })
+}
+
+function closeLightbox() {
+    const lightboxContainer = document.querySelector(".lightbox-container");
+    lightboxContainer.style.display = "none";
+    lightboxContainer.setAttribute("aria-hidden", "true");
+    lightboxContainer.remove();
+}
+
+function displayNext(mediasList, currentMedia) {
+    const index = mediasList.findIndex((element) => element.id == currentMedia.id);
+
+    //console.log(index)
+    if(index === mediasList.length - 1) {
+        currentMedia = mediasList[0]
+    } else {
+        currentMedia = mediasList[index + 1]
+    }
+
+    document.querySelector(".lightbox-container").remove();
+    
+    display(mediasList, index, currentMedia)
+}
+
+function displayPrevious(mediasList, currentMedia) {
+    const index = mediasList.findIndex((element) => element.id == currentMedia.id);
+
+    //console.log(index)
+    if(index === 0) {
+        currentMedia = mediasList[mediasList.length - 1]
+    } else {
+        currentMedia = mediasList[index - 1]
+    }
+
+    document.querySelector(".lightbox-container").remove();
+    
+    display(mediasList, index, currentMedia)
 }
