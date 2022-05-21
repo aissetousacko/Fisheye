@@ -4,6 +4,8 @@
 // Get "Id" from URL of photographer's page
 const photographerId = new URLSearchParams(window.location.search).get("id");
 let mediasList = [];
+let namePhotographer;
+
 /*****Affichage des informations du photographe******/
 //on récupère le photographe
 async function getPhotographer() {
@@ -15,6 +17,8 @@ async function getPhotographer() {
 	const photographer = photographers.photographers.filter(function(photographer) {
 		if(photographer.id == photographerId) {
 			//console.log(photographer);
+      namePhotographer = photographer.name;
+      console.log(namePhotographer)
 			return photographer;
 		}
 	});
@@ -223,6 +227,7 @@ async function init() {
   const photographerData = photographerFactory(photographer);
   photographerData.getPhotographerHeader();
 
+  getPhotographerName(namePhotographer);
   //on récupère tous les médias
   /* getMedias(); */
   const medias = await getMedias();
@@ -234,6 +239,7 @@ async function init() {
   stickyTag(photographer);
   allLikes(medias)
   incrementLikes()
+
   diplayLightbox(medias)
 };  
 

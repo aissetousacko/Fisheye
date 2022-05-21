@@ -22,7 +22,7 @@
   <main id="main">
     <!-- Photograph header -->
     <section class="photograph-header">
-      <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+      <button class="contact_button" onclick="displayModal()" aria-label="Contactez-moi">Contactez-moi</button>
     </section>
 
     <!-- Photograph medias -->
@@ -52,18 +52,35 @@
   </main>
 
   <!-- Contact modal -->
-  <div id="contact_modal">
-		<div class="modal">
+  <div id="contact_modal" role="dialog">
+		<div class="modal" aria-hidden="true">
 			<header>
-        <h2>Contactez-moi</h2>
-        <img src="assets/icons/close.svg" onclick="closeModal()" />
+        <h2 class="modal-title">Contactez-moi</h2>
+        <img id="close-modal" src="assets/icons/close.svg" onclick="closeModal()" />
       </header>
-			<form>
-				<div>
-					<label>Prénom</label>
-					<input />
+
+			<form name="contact" id="contact-form">
+				<div class="form-data">
+					<label for="first">Prénom</label>
+					<input id="first" name="first" type="text" class="text-control" aria-label="Entrez votre prénom"/>
 				</div>
-        <button class="contact_button">Envoyer</button>
+
+        <div class="form-data">
+					<label for="last">Nom</label>
+					<input id="last" name="last" type="text" class="text-control" aria-label="Entrez votre nom"/>
+				</div>
+
+        <div class="form-data">
+					<label for="email">Email</label>
+					<input id="email" name="email" type="email" class="text-control" aria-label="Entrez votre email"/>
+				</div>
+
+        <div class="form-data">
+					<label for="message">Votre message</label>
+					<textarea name="message" id="message" class="text-control" cols="5" rows="30" aria-label="Entrez votre message"></textarea>
+				</div>
+        
+        <button class="contact_button" aria-label="Envoyer le formulaire">Envoyer</button>
 			</form>
 		</div>
 	</div>
