@@ -1,28 +1,50 @@
 let index = 0;
 
 function diplayLightbox(mediasList) {
-
     //on sélectionne chaque image et vidéo pour qu'au click la lightbox s'affiche
     const mediasDom = document.querySelectorAll(".media-img, .media-video");
     //console.log(mediasDom)
     mediasDom.forEach(media => {
-        //au click sur l'image du média on ouvre la lightbox
         media.onclick = (e) => {
+            //display(e)
             console.log("click")
             let currentMediaTarget = e.target;
             console.log(e.target)
             //on va chercher l'élément cliqué dans le tableau
-            const currentMedia = mediasList.find((media) => media.id == currentMediaTarget.dataset.id)
+            let currentMedia = mediasList.find((media) => media.id == currentMediaTarget.dataset.id)
             console.log("current media")
             console.log(currentMedia)
             index = parseInt(e.target.getAttribute('data-id'));
-            //console.log(index)
-            display(mediasList, index, currentMedia)
+            console.log(index)
+            
+            lightboxDOM(currentMedia, index, mediasList)
         }
-    });
+
+        media.addEventListener("keydown", (e) => {
+            if(e.key === "Enter") {
+                //console.log("click keydown")
+                //console.log(e)
+                let currentMediaTarget = e.target;
+                console.log(e.target)
+                //on va chercher l'élément cliqué dans le tableau
+                let currentMedia = mediasList.find((media) => media.id == currentMediaTarget.dataset.id)
+                console.log("current media")
+                console.log(currentMedia)
+                index = parseInt(e.target.getAttribute('data-id'));
+                console.log(index)
+                
+                lightboxDOM(currentMedia, index, mediasList)
+            }
+        })
+    })
+
 }
 
-function display(mediasList, index, currentMedia) {
+
+function lightboxDOM(currentMedia, index, mediasList) {
+
+    const { photographerId, title, image, video } = currentMedia
+
     //lightbox
     const lightboxContainer = document.createElement("div");
     lightboxContainer.className = "lightbox-container";
@@ -45,25 +67,25 @@ function display(mediasList, index, currentMedia) {
     const lightboxMedia = document.createElement("div");
     lightboxMedia.className = "lightbox-media";
     lightboxModal.appendChild(lightboxMedia);
-    if(currentMedia.image) {
+    if("image" in currentMedia) {
         //image
         const lightboxImage = document.createElement("img");
         lightboxImage.className = "lightbox-image";
-        lightboxImage.setAttribute("src", `assets/photographers/${currentMedia.photographerId}/${currentMedia.image}`);
-        lightboxImage.setAttribute("alt", currentMedia.title);
+        lightboxImage.setAttribute("src", `assets/photographers/${photographerId}/${image}`);
+        lightboxImage.setAttribute("alt", title);
         lightboxImage.dataset.id = index;
         lightboxMedia.appendChild(lightboxImage);
     } 
     
-    else if(currentMedia.video) {
+    else {
         //video
         const lightboxVideo = document.createElement("video");
         const lightboxSourceVideo = document.createElement("source")
         lightboxVideo.className = "lightbox-video";
-        lightboxVideo.setAttribute("alt", currentMedia.title);
+        lightboxVideo.setAttribute("alt", title);
         lightboxVideo.setAttribute("controls", "");
         lightboxVideo.dataset.id = index;
-        lightboxSourceVideo.setAttribute("src", `assets/photographers/${currentMedia.photographerId}/${currentMedia.video}`);
+        lightboxSourceVideo.setAttribute("src", `assets/photographers/${photographerId}/${video}`);
         lightboxSourceVideo.setAttribute("type", "video/mp4");
         lightboxMedia.appendChild(lightboxVideo);
         lightboxVideo.appendChild(lightboxSourceVideo);
@@ -71,7 +93,7 @@ function display(mediasList, index, currentMedia) {
     //title
     const lightboxTitle = document.createElement("h3");
     lightboxTitle.className = "lightbox-title";
-    lightboxTitle.textContent = currentMedia.title;
+    lightboxTitle.textContent = title;
     lightboxMedia.appendChild(lightboxTitle);
 
     //close
@@ -89,11 +111,12 @@ function display(mediasList, index, currentMedia) {
     nextIcon.className = "fa-solid fa-chevron-right";
     lightboxNext.appendChild(nextIcon);
 
-    lightboxContainer.setAttribute("aria-hidden", "false");
-    lightboxContainer.style.display = "block";
+    //lightboxContainer.setAttribute("aria-hidden", "false");
+    //lightboxContainer.style.display = "block";
 
     eventHandler(mediasList, currentMedia);
 }
+
 
 function eventHandler(mediasList, currentMedia) {
     const lightboxClose = document.querySelector(".lightbox-close");
@@ -125,14 +148,13 @@ function eventHandler(mediasList, currentMedia) {
 
 function closeLightbox() {
     const lightboxContainer = document.querySelector(".lightbox-container");
-    lightboxContainer.style.display = "none";
-    lightboxContainer.setAttribute("aria-hidden", "true");
+    /* lightboxContainer.style.display = "none";
+    lightboxContainer.setAttribute("aria-hidden", "true"); */
     lightboxContainer.remove();
 }
 
 function displayNext(mediasList, currentMedia) {
     const index = mediasList.findIndex((element) => element.id == currentMedia.id);
-
     //console.log(index)
     if(index === mediasList.length - 1) {
         currentMedia = mediasList[0]
@@ -142,7 +164,7 @@ function displayNext(mediasList, currentMedia) {
 
     document.querySelector(".lightbox-container").remove();
     
-    display(mediasList, index, currentMedia)
+    lightboxDOM(currentMedia, index, mediasList)
 }
 
 function displayPrevious(mediasList, currentMedia) {
@@ -157,5 +179,5 @@ function displayPrevious(mediasList, currentMedia) {
 
     document.querySelector(".lightbox-container").remove();
     
-    display(mediasList, index, currentMedia)
+    lightboxDOM(currentMedia, index, mediasList)
 }

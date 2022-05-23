@@ -5,14 +5,15 @@ function mediasFactory(data) {
 
         const mediaArticle = document.createElement('article');
         mediaArticle.setAttribute("id", id);
-        mediaArticle.classList.add("media-article");
+        mediaArticle.className = "media-article";
 
         if("video" in data) {
             const videoFile = `assets/photographers/${photographerId}/${video}`;
             // vidéo
             const videoElement = document.createElement('video');
-            videoElement.classList.add("media-video");
+            videoElement.className = "media-video";
             videoElement.setAttribute("controls", "");
+            videoElement.setAttribute("tabindex", "0");
             videoElement.dataset.id = id
             const sourceVideo = document.createElement('source');
             sourceVideo.setAttribute("src",videoFile);
@@ -26,27 +27,28 @@ function mediasFactory(data) {
             const img = document.createElement('img');
             img.setAttribute("src", picture);
             img.setAttribute("alt", title);
+            img.setAttribute("tabindex", "0");
             img.dataset.id = id
-            img.classList.add("media-img");
+            img.className = "media-img";
             mediaArticle.appendChild(img);
         }
 
         // Div pour titre, nombre de likes et icone coeur
         const mediaDescription = document.createElement('div');
-        mediaDescription.className = 'media-description';
+        mediaDescription.className = "media-description";
         mediaArticle.appendChild(mediaDescription);       
-        const mediaText = document.createElement('h3');
+        const mediaText = document.createElement("h3");
         mediaText.textContent = title;
         mediaDescription.appendChild(mediaText);
 
         // Div pour nombre de likes et icone coeur
-        const mediaLikes = document.createElement('div');
-        mediaLikes.className= 'media-likes';
+        const mediaLikes = document.createElement("div");
+        mediaLikes.className= "media-likes";
         mediaDescription.appendChild(mediaLikes);
-        const span = document.createElement('span');
+        const span = document.createElement("span");
         span.textContent = likes;
-        const icon = document.createElement('i');
-        icon.className = 'fa-solid fa-heart icon-heart';
+        const icon = document.createElement("i");
+        icon.className = "fa-solid fa-heart icon-heart";
         icon.setAttribute("tabindex", 0);
         icon.setAttribute("title", "Like icon");
         icon.setAttribute("role","button");

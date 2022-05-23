@@ -8,6 +8,7 @@ const last = document.querySelector("#last");
 const email = document.querySelector("#email");
 const message = document.querySelector("#message");
 const headerModal = document.querySelector(".modal-title");
+const contactButton = document.querySelector(".contact_button");
 
 const nameRegex = /[a-zA-Z]/;
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -22,13 +23,54 @@ function displayModal() {
   modal.setAttribute("aria-hidden", "false");
   modal.classList.add("modal-open");
   main.setAttribute("aria-hidden", "true");
+  first.focus();
+  //focusElements(modal);
 }
 
 function closeModal() {
   modal.style.display = "none";
   modal.setAttribute("aria-hidden", "true");
   main.setAttribute("aria-hidden", "false");
+  contactButton.focus()
 }
+
+window.addEventListener("keydown", (e) => {
+  if(e.key === "Escape" || e.key === "Enter" && document.activeElement === closeButton) {
+    e.preventDefault();
+    closeModal();
+  }
+})
+
+/* function focusElements(modal) {
+  const elements = document.querySelectorAll("input, textarea, button, #close-modal");
+  const firstElement = elements[0];
+  const lastElement = elements[elements.length - 1];
+  console.log(firstElement);
+  console.log(elements[1]);
+  console.log(lastElement);
+
+  modal.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab") {
+      return;
+    }
+
+    if (e.shiftKey) {
+      if (document.activeElement == firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+        
+      }
+    } else {
+      if (document.activeElement == lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+        
+      }
+    }
+  });
+  elements[1].focus();
+
+} */
 
 // Show error messages
 function showError(inputElement, message) {
@@ -44,7 +86,7 @@ function hideError(inputElement) {
 
 function checkFirst() {
     if(first.value.length < 2 || nameRegex.test(first.value) === false) {
-        showError(first, "Veuillez entrer un prénnom valide")
+        showError(first, "Veuillez entrer un prénom valide")
     } else {
         hideError(first)
     }
@@ -75,26 +117,26 @@ function checkMessage() {
 }
 
 function validation() {
-    checkFirst();
-    checkLast();
-    checkEmail();
-    checkMessage();
+  checkFirst();
+  checkLast();
+  checkEmail();
+  checkMessage();
 
-    let isValid = true;
-    for(let errorAttribute of formData) {
-      if(errorAttribute.getAttribute("data-error")) {
-        isValid = false;
-      }
+  let isValid = true;
+  for(let errorAttribute of formData) {
+    if(errorAttribute.getAttribute("data-error")) {
+      isValid = false;
     }
+  }
 
-    if(isValid) {
-      console.log("ok");
-      console.log("prénom : " + first.value);
-      console.log("nom : " + last.value);
-      console.log("email : " + email.value);
-      console.log("message : " + message.value);
-      form.reset();
-    }
+  if(isValid) {
+    console.log("ok");
+    console.log("prénom : " + first.value);
+    console.log("nom : " + last.value);
+    console.log("email : " + email.value);
+    console.log("message : " + message.value);
+    form.reset();
+  }
 }
 
 form.addEventListener("submit", (e) => {

@@ -50,13 +50,13 @@
 
 .medias-filter {
     display: flex;
-    align-items: center;
 }
 
 .medias-filter label{
     font-size: 18px;
     font-weight: 600;
     margin-right: 20px;
+    margin-top: 20px;
 }
 
 #filter {

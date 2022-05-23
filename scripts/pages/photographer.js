@@ -18,7 +18,7 @@ async function getPhotographer() {
 		if(photographer.id == photographerId) {
 			//console.log(photographer);
       namePhotographer = photographer.name;
-      console.log(namePhotographer)
+      //console.log(namePhotographer)
 			return photographer;
 		}
 	});
@@ -66,6 +66,7 @@ function displayMedia(medias) {
     photographerMediasSection.appendChild(mediaCardDOM);
     //On ajoute le média dans le tableau qui contien tous les médias du photographe
     mediasList.push(media)
+    
   });
   
 }
@@ -112,6 +113,7 @@ function sortMedias(medias) {
   });
   displayMedia(medias)
   incrementLikes()
+  diplayLightbox(mediasList)
 
   filterOptions.forEach(filter => {
     filter.onclick = (e) => {
@@ -145,7 +147,8 @@ function sortMedias(medias) {
       
       displayMedia(medias)
       incrementLikes()
-      diplayLightbox(medias)
+      diplayLightbox(mediasList)
+      
     }
     
   })
@@ -187,7 +190,7 @@ function stickyTag(photographer) {
   return tag;
 }
 
-//onc rée une event qui target les coeurs et augmente leur nombre
+//on crée une event qui target les coeurs et augmente leur nombre
 function incrementLikes() {
   const likesIcon = document.querySelectorAll(".icon-heart");
   const allLikes = document.querySelector(".tag-likes p");
@@ -195,25 +198,52 @@ function incrementLikes() {
   //console.log(allLikes)
 
   //on parcourt tous les icones likes
-  for(let i = 0; i < likesIcon.length; i++) {
-    //sur chaque icone on met un event click
-    likesIcon[i].onclick = () => {
-      //on récupère l'élément qui contient le texte du nombre des likes
-      let likeText = likesIcon[i].previousElementSibling;
+  likesIcon.forEach(like => {
+
+    like.onclick = () => {
+      let likeText = like.previousElementSibling;
       //console.log(likeText)
       //si l'élément contient la classe liked on décrémente sinon on incrémente
       if(likeText.classList.contains("liked")) {
-        likeText.textContent--;
         likeText.classList.remove("liked");
+        console.log(likeText);
+        likeText.textContent--;
         allLikes.textContent--;
       } else {
-        likeText.textContent++;
         likeText.classList.add("liked");
+        console.log(likeText);
+        likeText.textContent++;
         allLikes.textContent++;
       }
     }
-  }
+
+    like.addEventListener("keyup", (e) => {
+      if(e.key === "Enter") {
+        //increment(i)
+        let likeText = like.previousElementSibling;
+        console.log(likeText.textContent)
+      }
+    })
+  })
   
+
+  function increment(i) {
+    //on récupère l'élément qui contient le texte du nombre des likes
+    let likeText = likesIcon[i].previousElementSibling;
+    //console.log(likeText)
+    //si l'élément contient la classe liked on décrémente sinon on incrémente
+    if(likeText.classList.contains("liked")) {
+      likeText.classList.remove("liked");
+      console.log(likeText);
+      likeText.textContent--;
+      allLikes.textContent--;
+    } else {
+      likeText.classList.add("liked");
+      console.log(likeText);
+      likeText.textContent++;
+      allLikes.textContent++;
+    }
+  }
   
 }
 
@@ -221,7 +251,6 @@ async function init() {
   //console.log("init header");
 	const photographer = await getPhotographer();
 	//console.log(photographer);
-
 
   //Photographer header
   const photographerData = photographerFactory(photographer);
@@ -240,7 +269,6 @@ async function init() {
   allLikes(medias)
   incrementLikes()
 
-  diplayLightbox(medias)
 };  
 
 init();
