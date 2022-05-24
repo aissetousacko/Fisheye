@@ -1,15 +1,12 @@
-//affiche l'icone du photographe
 function photographerFactory(data) {
-    //on récupère les données dont on a besoin
+
     const { name, id, portrait, city, country, tagline, price } = data;
 
-    //on récupère le chemin de l'image
     const picture = `assets/photographers/photographers-id-photos/${portrait}`;
 
-    //Crée la carte du photographe en utilisant le DOM
     function getUserCardDOM() {
       const photographerArticle = document.createElement("article");
-      
+
       //link
       const photographerLink = document.createElement("a");
       const photographerURL = `photographer.html?id=${id}`;
@@ -36,7 +33,6 @@ function photographerFactory(data) {
       const priceElement = document.createElement("p");
       priceElement.textContent = price + "€/jour";
       
-      //ajout des éléments dans l'article
       photographerArticle.appendChild(photographerLink);
 
       photographerLink.appendChild(img);
@@ -51,7 +47,6 @@ function photographerFactory(data) {
 
     function getPhotographerHeader() {
       const photographerHeader = document.querySelector(".photograph-header");
-	    //const contactButton = document.querySelector(".contact_button");
 	    const photographerDetail = document.createElement("article");
 	    photographerHeader.prepend(photographerDetail);
 
@@ -65,12 +60,10 @@ function photographerFactory(data) {
 	    const taglineElement = document.createElement('p');
 	    taglineElement.textContent = tagline;
 
-	    //ajout des éléments dans l'article
 	    photographerDetail.appendChild(h1);
 	    photographerDetail.appendChild(location);
 	    photographerDetail.appendChild(taglineElement);
 
-      //photo de profil du photographe
 	    const picture = `assets/photographers/photographers-id-photos/${portrait}`;
       const img = document.createElement("img");
       img.setAttribute("src", picture);

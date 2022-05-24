@@ -18,15 +18,16 @@ function getPhotographerName(data) {
   headerModal.innerHTML += ` ${data}`;
 }
 
+//Display the contact modal
 function displayModal() {
 	modal.style.display = "block";
   modal.setAttribute("aria-hidden", "false");
   modal.classList.add("modal-open");
   main.setAttribute("aria-hidden", "true");
   first.focus();
-  //focusElements(modal);
 }
 
+//Close the contact modal
 function closeModal() {
   modal.style.display = "none";
   modal.setAttribute("aria-hidden", "true");
@@ -34,6 +35,7 @@ function closeModal() {
   contactButton.focus()
 }
 
+//Keyboard events
 window.addEventListener("keydown", (e) => {
   if(e.key === "Escape" || e.key === "Enter" && document.activeElement === closeButton) {
     e.preventDefault();
@@ -41,18 +43,19 @@ window.addEventListener("keydown", (e) => {
   }
 })
 
-// Show error messages
+//Show error messages
 function showError(inputElement, message) {
   inputElement.parentElement.dataset.errorVisible = 'true';
   inputElement.parentElement.dataset.error = message;
 }
 
-// Hide error messages
+//Hide error messages
 function hideError(inputElement) {
   delete inputElement.parentElement.dataset.errorVisible;
   delete inputElement.parentElement.dataset.error;
 }
 
+//First name validation
 function checkFirst() {
     if(first.value.length < 2 || nameRegex.test(first.value) === false) {
         showError(first, "Veuillez entrer un prénom valide")
@@ -61,6 +64,7 @@ function checkFirst() {
     }
 }
 
+//Last name validation
 function checkLast() {
   if(last.value.length < 2 || nameRegex.test(last.value) === false) {
       showError(last, "Veuillez entrer un nom valide")
@@ -69,6 +73,7 @@ function checkLast() {
   }
 }
 
+//Email validation
 function checkEmail() {
   if(first.value === "" || emailRegex.test(email.value) === false) {
       showError(email, "Veuillez entrer un email valide")
@@ -77,6 +82,7 @@ function checkEmail() {
   }
 }
 
+//Message validation
 function checkMessage() {
   if(message.value.length < 10) {
       showError(message, "Veuillez laisser un message")
@@ -85,6 +91,7 @@ function checkMessage() {
   }
 }
 
+//Validation of all input and show results in the console
 function validation() {
   checkFirst();
   checkLast();
@@ -108,9 +115,8 @@ function validation() {
   }
 }
 
+//Submit event
 form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    //console.log("submit");
-    validation()
-    
+  e.preventDefault();
+  validation()
 })

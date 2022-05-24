@@ -33,7 +33,7 @@ function mediasFactory(data) {
             mediaArticle.appendChild(img);
         }
 
-        // Div pour titre, nombre de likes et icone coeur
+        // Div for title, likes and heart icon
         const mediaDescription = document.createElement('div');
         mediaDescription.className = "media-description";
         mediaArticle.appendChild(mediaDescription);       
@@ -41,7 +41,7 @@ function mediasFactory(data) {
         mediaText.textContent = title;
         mediaDescription.appendChild(mediaText);
 
-        // Div pour nombre de likes et icone coeur
+        // Div for numbers of likes and heart icon
         const mediaLikes = document.createElement("div");
         mediaLikes.className= "media-likes";
         mediaDescription.appendChild(mediaLikes);

@@ -1,4 +1,4 @@
-/******Photograph header********/
+/******Photographer header********/
 
 .photograph-header {
     background-color: #FAFAFA;
@@ -203,7 +203,6 @@
 
 /******Lightbox*******/
 .lightbox-container {
-    /* display: block; */
     width: 100%;
     height: 100vh;
     position: fixed;
@@ -239,13 +238,6 @@
     top: 0;
     right: 4%;
 }
-
-/* .lightbox-image,
-.lightbox-video {
-    width: 100%;
-    height: 80vh;
-    object-fit: cover;
-} */
 
 .lightbox-media img,
 .lightbox-media video {
