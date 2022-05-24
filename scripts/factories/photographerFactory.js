@@ -80,5 +80,5 @@ function photographerFactory(data) {
       return photographerDetail;
     }
     
-    return { name, picture, getUserCardDOM, getPhotographerHeader }
+    return { picture, getUserCardDOM, getPhotographerHeader }
 }

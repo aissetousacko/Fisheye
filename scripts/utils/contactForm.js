@@ -41,37 +41,6 @@ window.addEventListener("keydown", (e) => {
   }
 })
 
-/* function focusElements(modal) {
-  const elements = document.querySelectorAll("input, textarea, button, #close-modal");
-  const firstElement = elements[0];
-  const lastElement = elements[elements.length - 1];
-  console.log(firstElement);
-  console.log(elements[1]);
-  console.log(lastElement);
-
-  modal.addEventListener("keydown", (e) => {
-    if (e.key !== "Tab") {
-      return;
-    }
-
-    if (e.shiftKey) {
-      if (document.activeElement == firstElement) {
-        e.preventDefault();
-        lastElement.focus();
-        
-      }
-    } else {
-      if (document.activeElement == lastElement) {
-        e.preventDefault();
-        firstElement.focus();
-        
-      }
-    }
-  });
-  elements[1].focus();
-
-} */
-
 // Show error messages
 function showError(inputElement, message) {
   inputElement.parentElement.dataset.errorVisible = 'true';
@@ -141,7 +110,7 @@ function validation() {
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    console.log("submit");
+    //console.log("submit");
     validation()
     
 })

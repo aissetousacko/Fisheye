@@ -29,7 +29,7 @@ async function getPhotographer() {
 
 /**Pour récupérer les médias**/
 async function getMedias() {
-  console.log("init medias")
+  //console.log("init medias")
   const data = await fetch ("data/photographers.json")
   let medias = await data.json();
   medias = medias.media.filter((media) => {
@@ -42,7 +42,7 @@ async function getMedias() {
   console.log(photographerId)
   console.log("tous les médias")
   console.log(medias) */
-  console.log(mediasList)
+  //console.log(mediasList)
   return medias;
   
 }
@@ -53,7 +53,6 @@ function displayMedia(medias) {
   const photographerMediasSection = document.querySelector(".medias-display");
   //console.log(medias);
   photographerMediasSection.innerHTML = "";
-
   
   //on parcourt tous les médias
   medias.forEach(media => {
@@ -98,7 +97,7 @@ function closeBox() {
   
   filterOptionsBox.style.display = "none";
   filterOptionsBox.setAttribute("aria-expanded", "false");
-  console.log("close")
+  //console.log("close")
   return isOpen = false
   
 }
@@ -107,12 +106,11 @@ function sortMedias(medias) {
   const filterOptions = document.querySelectorAll(".filter-option");
   const selected = document.querySelector(".selected");
 
-  console.log("popularité - default")
+  //console.log("popularité - default")
   medias = medias.sort((media1, media2) => {
     return media2.likes - media1.likes;
   });
   displayMedia(medias)
-  incrementLikes()
   diplayLightbox(mediasList)
 
   filterOptions.forEach(filter => {
@@ -201,45 +199,30 @@ function incrementLikes() {
   likesIcon.forEach(like => {
 
     like.onclick = () => {
-      let likeText = like.previousElementSibling;
-      //console.log(likeText)
-      //si l'élément contient la classe liked on décrémente sinon on incrémente
-      if(likeText.classList.contains("liked")) {
-        likeText.classList.remove("liked");
-        console.log(likeText);
-        likeText.textContent--;
-        allLikes.textContent--;
-      } else {
-        likeText.classList.add("liked");
-        console.log(likeText);
-        likeText.textContent++;
-        allLikes.textContent++;
-      }
+      increment(like);
     }
 
-    like.addEventListener("keyup", (e) => {
+    like.addEventListener("keydown", (e) => {
       if(e.key === "Enter") {
-        //increment(i)
-        let likeText = like.previousElementSibling;
-        console.log(likeText.textContent)
+        increment(like)
       }
     })
   })
   
 
-  function increment(i) {
+  function increment(like) {
     //on récupère l'élément qui contient le texte du nombre des likes
-    let likeText = likesIcon[i].previousElementSibling;
+    let likeText = like.previousElementSibling;
     //console.log(likeText)
     //si l'élément contient la classe liked on décrémente sinon on incrémente
     if(likeText.classList.contains("liked")) {
       likeText.classList.remove("liked");
-      console.log(likeText);
+      //console.log(likeText);
       likeText.textContent--;
       allLikes.textContent--;
     } else {
       likeText.classList.add("liked");
-      console.log(likeText);
+      //console.log(likeText);
       likeText.textContent++;
       allLikes.textContent++;
     }

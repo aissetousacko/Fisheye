@@ -1,21 +1,27 @@
 let index = 0;
 
+//lightbox container
+const lightboxContainer = document.createElement("div");
+lightboxContainer.className = "lightbox-container";
+lightboxContainer.style.display = "none";
+lightboxContainer.setAttribute("aria-hidden", "true");
+document.body.appendChild(lightboxContainer);
+
 function diplayLightbox(mediasList) {
     //on sélectionne chaque image et vidéo pour qu'au click la lightbox s'affiche
     const mediasDom = document.querySelectorAll(".media-img, .media-video");
     //console.log(mediasDom)
     mediasDom.forEach(media => {
         media.onclick = (e) => {
-            //display(e)
-            console.log("click")
+            //console.log("click")
             let currentMediaTarget = e.target;
-            console.log(e.target)
+            //console.log(e.target)
             //on va chercher l'élément cliqué dans le tableau
             let currentMedia = mediasList.find((media) => media.id == currentMediaTarget.dataset.id)
-            console.log("current media")
-            console.log(currentMedia)
+            //console.log("current media")
+            //console.log(currentMedia)
             index = parseInt(e.target.getAttribute('data-id'));
-            console.log(index)
+            //console.log(index)
             
             lightboxDOM(currentMedia, index, mediasList)
         }
@@ -25,13 +31,13 @@ function diplayLightbox(mediasList) {
                 //console.log("click keydown")
                 //console.log(e)
                 let currentMediaTarget = e.target;
-                console.log(e.target)
+                //console.log(e.target)
                 //on va chercher l'élément cliqué dans le tableau
                 let currentMedia = mediasList.find((media) => media.id == currentMediaTarget.dataset.id)
-                console.log("current media")
-                console.log(currentMedia)
+                //console.log("current media")
+                //console.log(currentMedia)
                 index = parseInt(e.target.getAttribute('data-id'));
-                console.log(index)
+                //console.log(index)
                 
                 lightboxDOM(currentMedia, index, mediasList)
             }
@@ -45,10 +51,8 @@ function lightboxDOM(currentMedia, index, mediasList) {
 
     const { photographerId, title, image, video } = currentMedia
 
-    //lightbox
-    const lightboxContainer = document.createElement("div");
-    lightboxContainer.className = "lightbox-container";
-    document.body.appendChild(lightboxContainer);
+    lightboxContainer.style.display = "block";
+    lightboxContainer.setAttribute("aria-hidden", "false");
 
     //lightbox modal
     const lightboxModal = document.createElement("div");
@@ -111,9 +115,6 @@ function lightboxDOM(currentMedia, index, mediasList) {
     nextIcon.className = "fa-solid fa-chevron-right";
     lightboxNext.appendChild(nextIcon);
 
-    //lightboxContainer.setAttribute("aria-hidden", "false");
-    //lightboxContainer.style.display = "block";
-
     eventHandler(mediasList, currentMedia);
 }
 
@@ -148,9 +149,8 @@ function eventHandler(mediasList, currentMedia) {
 
 function closeLightbox() {
     const lightboxContainer = document.querySelector(".lightbox-container");
-    /* lightboxContainer.style.display = "none";
-    lightboxContainer.setAttribute("aria-hidden", "true"); */
-    lightboxContainer.remove();
+    lightboxContainer.style.display = "none";
+    lightboxContainer.setAttribute("aria-hidden", "true");
 }
 
 function displayNext(mediasList, currentMedia) {
@@ -162,7 +162,7 @@ function displayNext(mediasList, currentMedia) {
         currentMedia = mediasList[index + 1]
     }
 
-    document.querySelector(".lightbox-container").remove();
+    lightboxContainer.innerHTML = "";
     
     lightboxDOM(currentMedia, index, mediasList)
 }
@@ -177,7 +177,7 @@ function displayPrevious(mediasList, currentMedia) {
         currentMedia = mediasList[index - 1]
     }
 
-    document.querySelector(".lightbox-container").remove();
+    lightboxContainer.innerHTML = "";
     
     lightboxDOM(currentMedia, index, mediasList)
 }
