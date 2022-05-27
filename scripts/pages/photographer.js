@@ -7,7 +7,7 @@ let namePhotographer;
 
 //Get the photographer's infos
 async function getPhotographer() {
-	const data = await fetch("../data/photographers.json");
+	const data = await fetch("./data/photographers.json");
   const photographers = await data.json();
 
   //Return the photographer with the same ID
@@ -23,7 +23,7 @@ async function getPhotographer() {
 
 //Get the medias of the photographer
 async function getMedias() {
-  const data = await fetch ("data/photographers.json")
+  const data = await fetch ("./data/photographers.json")
   let medias = await data.json();
 
   medias = medias.media.filter((media) => {
