@@ -106,7 +106,6 @@ function validation() {
   }
 
   if(isValid) {
-    console.log("ok");
     console.log("prénom : " + first.value);
     console.log("nom : " + last.value);
     console.log("email : " + email.value);

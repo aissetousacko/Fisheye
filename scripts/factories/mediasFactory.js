@@ -48,7 +48,7 @@ function mediasFactory(data) {
         const span = document.createElement("span");
         span.textContent = likes;
         const icon = document.createElement("i");
-        icon.className = "fa-solid fa-heart icon-heart";
+        icon.className = "fa-regular fa-heart icon-heart";
         icon.setAttribute("tabindex", 0);
         icon.setAttribute("title", "Like icon");
         icon.setAttribute("role","button");
