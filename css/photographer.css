@@ -3,7 +3,7 @@
 .photograph-header {
     background-color: #FAFAFA;
     height: 300px;
-    margin: 25px 50px;
+    margin: 25px 95px;
     padding: 0 50px;
     display: flex;
     justify-content: space-between;
@@ -50,6 +50,7 @@
 
 .medias-filter {
     display: flex;
+    margin-left: 50px;
 }
 
 .medias-filter label{
