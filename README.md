@@ -1,6 +1,19 @@
-# Base de code du projet P6 - Parcours Front-end
+<p align=center>
+  <img src="/assets/images/logo.png" alt="Logo Fisheye" />
+</p>
 
-## Démarrer le projet
 
-Rien à installer ici, il suffit d'ouvrir le fichier `index.html`.
+## General infos
+Fisheye is a website whicth allows independent photographers to display their best work. The site allows to choose a photographer and to showcase their work. The site is also accesible to visually impaired users. <br />
+[View the project](https://aissetousacko.github.io/Fisheye/index.html)
 
+
+## Technologies
+This project is created with : 
+* HTML
+* CSS
+* Javascript
+
+
+## Sources
+This project is a study project carried out with Openclassrooms
