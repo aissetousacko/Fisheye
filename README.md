@@ -3,7 +3,7 @@
 </p>
 
 
-## General infos
+## Presentation
 Fisheye is a website whicth allows independent photographers to display their best work. The site allows to choose a photographer and to showcase their work. The site is also accesible to visually impaired users. <br />
 [View the project](https://aissetousacko.github.io/Fisheye/index.html)
 
@@ -15,5 +15,5 @@ This project is created with :
 * Javascript
 
 
-## Sources
-This project is a study project carried out with Openclassrooms
+## Author
+Aïssetou SACKO - This project is a study project carried out with Openclassrooms
